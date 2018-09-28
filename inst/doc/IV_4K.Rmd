@@ -1,0 +1,35 @@
+---
+title: "Damp Heat Plus Dynamic Mechanical Load Indoor Accelerated Test I-V Curve "
+author: "Jiqi Liu, Justin S. fada, Alan Curran, Jennifer L. Braid, Roger H. French"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Damp Heat Plus Dynamic Mechanical Load Indoor Accelerated Test I-V Curve}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+Data Description
+-----------------------------------
+The I-V curve data is used for MLEET (Module Level Exposure and Evaluation Test) project funded by DOE (Department of Energy). It was taken from some commercial brand full size PV (photovoltaic) module under dampheat + DML (Dynamic Mechanical Load) indoor accelerated test. Each I-V curve has about 3800 points.
+
+Load data and run code to extract IV features 
+------------------------------------------
+```{r, message=FALSE, eval=TRUE}
+library(ddiv)
+data("IV_4K")
+IVExtractResult(IV_4K)
+```
+Example output
+--------------------------
+The result for finding steps for example data "IV_4K", no changepoint identifying step is found.
+
+![](IV_4K.png)
+
+Reference
+------------------------------------------
+JiQi Liu, Alan Curran, Justin S. Fada, Xuan Ma, Wei-Heng Huang, C. Birk Jones, Erdmut Schnabel, Michael K¨ohl, Jennifer L. Braid, Roger H. French, 2018. Cross-correlation Analysis of the Indoor Accelerated and Real World Exposed Photovoltaic Systems Across Multiple Climate Zones, WCPEC-7, Hawaii. 
+
+
+Acknowledgement
+------------------------------------------
+This work was supported by the DOE-EERE SETO award DE-EE-0007140 

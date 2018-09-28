@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Jiqi Liu, Justin S. fada, Alan Curran, Jennifer L. Braid, Roger H. French" />
+
+<meta name="date" content="2018-09-18" />
+
+<title>Damp Heat Plus Dynamic Mechanical Load Indoor Accelerated Test I-V Curve</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Damp Heat Plus Dynamic Mechanical Load Indoor Accelerated Test I-V Curve</h1>
+<h4 class="author"><em>Jiqi Liu, Justin S. fada, Alan Curran, Jennifer L. Braid, Roger H. French</em></h4>
+<h4 class="date"><em>2018-09-18</em></h4>
+
+
+
+<div id="data-description" class="section level2">
+<h2>Data Description</h2>
+<p>The I-V curve data is used for MLEET (Module Level Exposure and Evaluation Test) project funded by DOE (Department of Energy). It was taken from some commercial brand full size PV (photovoltaic) module under dampheat + DML (Dynamic Mechanical Load) indoor accelerated test. Each I-V curve has about 3800 points.</p>
+</div>
+<div id="load-data-and-run-code-to-extract-iv-features" class="section level2">
+<h2>Load data and run code to extract IV features</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ddiv)
+<span class="kw">data</span>(<span class="st">&quot;IV_4K&quot;</span>)
+<span class="kw">IVExtractResult</span>(IV_4K)</code></pre></div>
+<pre><code>##      step   Isc     Rsh    Voc    Rs     Pmp   Imp    Vmp    FF Cutoff
+## y407    1 9.409 178.727 39.705 0.487 290.337 9.003 32.251 77.72     NA</code></pre>
+</div>
+<div id="example-output" class="section level2">
+<h2>Example output</h2>
+<p>The result for finding steps for example data “IV_4K”, no changepoint identifying step is found.</p>
+<div class="figure">
+<img src="data:image/png;base64,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" />
+
+</div>
+</div>
+<div id="reference" class="section level2">
+<h2>Reference</h2>
+<p>JiQi Liu, Alan Curran, Justin S. Fada, Xuan Ma, Wei-Heng Huang, C. Birk Jones, Erdmut Schnabel, Michael K¨ohl, Jennifer L. Braid, Roger H. French, 2018. Cross-correlation Analysis of the Indoor Accelerated and Real World Exposed Photovoltaic Systems Across Multiple Climate Zones, WCPEC-7, Hawaii.</p>
+</div>
+<div id="acknowledgement" class="section level2">
+<h2>Acknowledgement</h2>
+<p>This work was supported by the DOE-EERE SETO award DE-EE-0007140</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

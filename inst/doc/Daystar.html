@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Menghong Wang, Jiqi Liu, Jennifer L. Braid, Roger H. French" />
+
+<meta name="date" content="2018-09-18" />
+
+<title>Outdoor Time Series I-V Curve Data from SDLE SunFarm</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Outdoor Time Series I-V Curve Data from SDLE SunFarm</h1>
+<h4 class="author"><em>Menghong Wang, Jiqi Liu, Jennifer L. Braid, Roger H. French</em></h4>
+<h4 class="date"><em>2018-09-18</em></h4>
+
+
+
+<div id="data-description" class="section level2">
+<h2>Data Description</h2>
+<p>This dataset comes from SDLE SunFarm, which provides extensive outdoor exposure capabilities, including mini-modules and full size modules mounted on both dual axis trackers fixed racks. Modules are individually controlled and operated by Daystar multi-tracer system at their peak power during daylight hours. Data acquired include time-series I-V curve data taken every 10 minutes, and time series power, voltage, current and weather data collected every minute.</p>
+</div>
+<div id="load-data-and-run-code-to-extract-iv-features" class="section level2">
+<h2>Load data and run code to extract IV features</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ddiv)
+<span class="kw">data</span>(<span class="st">&quot;IV_daystar&quot;</span>)
+<span class="kw">IVExtractResult</span>(IV_daystar,<span class="dt">k=</span><span class="dv">4</span>)</code></pre></div>
+<pre><code>##      step   Isc    Rsh   Voc    Rs   Pmp   Imp   Vmp    FF Cutoff
+## y419    1 0.267 69.845 0.554 0.135 0.112 0.241 0.464 75.72     NA</code></pre>
+</div>
+<div id="example-output" class="section level2">
+<h2>Example output</h2>
+<p>The result for finding steps for example data “IV_daystar”, no changepoint identifying step is found.</p>
+<div class="figure">
+<img src="data:image/png;base64,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" />
+
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
