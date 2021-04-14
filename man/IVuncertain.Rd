@@ -4,11 +4,21 @@
 \alias{IVuncertain}
 \title{Uncertainty for IV feature extraction}
 \usage{
-IVuncertain(dat, crt = 0.2, num = 75, crtvalb = 0.3, iter = 1000,
-  plot.option = F)
+IVuncertain(
+  dat,
+  k = 7,
+  crt = 0.2,
+  num = 75,
+  crtvalb = 0.3,
+  iter = 100,
+  diff_slp = 0.01,
+  plot.option = FALSE
+)
 }
 \arguments{
 \item{dat}{A dataframe of IV curve. The variable names should be "V" for voltage, and "I" for current. And rank with increasing voltage.}
+
+\item{k}{The number of equally-spaced values to supply as starting values for the breakpoints. The default is 7.}
 
 \item{crt}{a value to set for how large of regression coefficient change rate we use as not changing much. Should be the same as using function "IVExtractResult". Default is 0.6.}
 
@@ -16,7 +26,9 @@ IVuncertain(dat, crt = 0.2, num = 75, crtvalb = 0.3, iter = 1000,
 
 \item{crtvalb}{a value to set the change of I(current) we want to use as changing very much (to detect the end of IV curve). Suggestion is to test this function with several IV curves for your data and find the proper value. The default is 0.3}
 
-\item{iter}{number of iterations want to use to calculate uncertainty. Default is 1000, takes about 20 minutes to finish calculation.}
+\item{iter}{number of iterations want to use to calculate uncertainty. Default is 100, takes about 2 minutes to finish calculation.}
+
+\item{diff_slp}{The difference between the slope on the left and on the right of the change point. The default is 0.01.}
 
 \item{plot.option}{True/False, it plots the IV curve. The default is false.}
 }
@@ -42,5 +54,4 @@ Calculate the uncertainty of this data driven IV feature extraction
 data(IV_step1)
 IV1 <- data.frame(IV_step1)
 \donttest{IVuncertain(IV1)}
-
 }

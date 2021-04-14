@@ -8,6 +8,7 @@
 ##' @param num A value of number of data points. The default is 75.
 ##' @param crtvalb A value to set the change of I(current) we want to use as changing very much (to detect the end of IV curve). Suggestion is to test this function with several IV curves for your data and find the proper value. The default is 0.3
 ##' @param k The number of equally-spaced values to supply as starting values for the breakpoints. The default is 7.
+##' @param diff_slp The difference between the slope on the left and on the right of the change point. The default is 0.01.
 ##'
 ##'
 ##'
@@ -36,20 +37,44 @@
 ##' #load the data provided in the package
 ##' data(IV_step1)
 ##' IV1 <- data.frame(IV_step1)
-##' result <- IVExtractResult(IV1,plot.option=FALSE)
+##' result <- IVExtractResult(IV1, plot.option = FALSE)
 ##' #use the IV curve with step=2
 ##' data(IV_step2)
 ##' IV2 <- data.frame(IV_step2)
 ##' #with plot.option=TRUE, IV curve and steps are ploted
-##' result2 <- IVExtractResult(IV2,plot.option=FALSE)
+##' result2 <- IVExtractResult(IV2, plot.option = FALSE)
 ##' #use the IV curve with step=3
 ##' data(IV_step3)
 ##' IV3 <- data.frame(IV_step3)
-##' IVExtractResult(IV3,plot.option=FALSE)
-##'
+##' IVExtractResult(IV3, plot.option = FALSE)
+##' \donttest{
+##' data("IV_timeseries")
+##' df <- IV_timeseries
+##' result <- data.frame()
+##' for (i in 1:length(df$tmst)){
+##'   IV = df$ivdf[i]
+##'   IV <- as.character(IV)
+##'   IV = data.frame(IV = strsplit(IV, '#'))
+##'   names(IV) <- 'IV'
+##'   IV$IV <- as.character(IV$IV)
+##'   IV <- tidyr::separate(IV, "IV", into = c("V", "I"), sep = '\\*')
+##'   IV <- IV[-1,]
+##'   IV$V = as.numeric(as.character(IV$V))
+##'   IV$I = as.numeric(as.character(IV$I))
+##'   IV = IV[order(IV$V, decreasing = FALSE),]
+##'   IV_frame <- data.frame(IV)
+##'   trial = try(IVfeature(IV_frame$I, IV_frame$V), silent = TRUE)
+##'   if ('try-error' %in% class(trial)){
+##'     temp <- data.frame(NA, NA, NA, NA, NA, NA, NA, NA)
+##'     names(temp) <- c('Isc', 'Rsh', 'Voc', 'Rs', 'Pmp', 'Imp', 'Vmp', 'FF')
+##'   }else{
+##'     temp <- data.frame(trial)
+##'   }
+##'   result <- rbind(result, temp)
+##' }
+##' result <- cbind(df, result)}
 
-
-IVExtractResult <- function(dat,k=7,crt=0.2,num=75,crtvalb=0.3,plot.option=F){
+IVExtractResult <- function(dat, k = 7, crt = 0.2, num = 75, crtvalb = 0.3, diff_slp = 0.01, plot.option = F){
 
   dat <- subset(dat, V > 0)
   V <- dat$V ; I <- dat$I
@@ -62,7 +87,7 @@ IVExtractResult <- function(dat,k=7,crt=0.2,num=75,crtvalb=0.3,plot.option=F){
   y <- unlist(newDat[2])    ## Current
 
   #Use the IVsteps function to calculate how many steps are in our curve
-  seg <- IVsteps(I,V,k,plot.option)
+  seg <- IVsteps(I, V, k, diff_slp, plot.option)
   step <- seg$step
   xsep <- seg$xsep
 
@@ -70,7 +95,7 @@ IVExtractResult <- function(dat,k=7,crt=0.2,num=75,crtvalb=0.3,plot.option=F){
   if (step %in% 1) {
     V_all <- x
     I_all <- y
-    IVf <- IVfeature(I_all, V_all, crt=crt,num=num,crtvalb=crtvalb)
+    IVf <- IVfeature(I_all, V_all, crt = crt,num = num,crtvalb = crtvalb)
     isc <- IVf$Isc
     voc <- IVf$Voc
     R_sh <- IVf$Rsh
@@ -91,9 +116,9 @@ IVExtractResult <- function(dat,k=7,crt=0.2,num=75,crtvalb=0.3,plot.option=F){
 
     for (j in 1:step) {
       if (j %in% 1) {
-        I_cut <- y[which(x < xsep[1,1])]
-        V_cut <- x[which(x < xsep[1,1])]
-        IVf <- IVfeature(I_cut,V_cut,crt=crt,num=num,crtvalb=crtvalb)
+        I_cut <- y[which(x < xsep[1, 1])]
+        V_cut <- x[which(x < xsep[1, 1])]
+        IVf <- IVfeature(I_cut, V_cut, crt = crt, num = num, crtvalb = crtvalb)
         isc[j,1] <- IVf$Isc
         voc[j,1] <- IVf$Voc
         R_sh[j,1] <- IVf$Rsh
@@ -106,7 +131,7 @@ IVExtractResult <- function(dat,k=7,crt=0.2,num=75,crtvalb=0.3,plot.option=F){
         if (j > 1 && j < step) {
           I_cut <- y[which(x > xsep[j-1,1] & x < xsep[j,1])]
           V_cut <- x[which(x > xsep[j-1,1] & x < xsep[j,1])]
-          IVf <- IVfeature(I_cut,V_cut, crt=crt,num=num,crtvalb=crtvalb)
+          IVf <- IVfeature(I_cut, V_cut, crt = crt, num = num, crtvalb = crtvalb)
           isc[j,1] <- IVf$Isc
           voc[j,1] <- IVf$Voc
           R_sh[j,1] <- IVf$Rsh
@@ -118,7 +143,7 @@ IVExtractResult <- function(dat,k=7,crt=0.2,num=75,crtvalb=0.3,plot.option=F){
         }else{
           I_cut <- y[which(x > xsep[j-1,1])]
           V_cut <- x[which(x > xsep[j-1,1])]
-          IVf <- IVfeature(I_cut,V_cut, crt=crt,num=num,crtvalb=crtvalb)
+          IVf <- IVfeature(I_cut, V_cut, crt = crt, num = num, crtvalb = crtvalb)
           isc[j,1] <- IVf$Isc
           voc[j,1] <- IVf$Voc
           R_sh[j,1] <- IVf$Rsh
@@ -142,7 +167,7 @@ IVExtractResult <- function(dat,k=7,crt=0.2,num=75,crtvalb=0.3,plot.option=F){
     Vmp <- tab_to_char(Vmp)
   }
 
-res <- data.frame(step=step,Isc=isc,Rsh=R_sh,Voc=voc,Rs=R_s,Pmp=pmp,Imp=Imp,Vmp=Vmp,FF=ff,Cutoff=xsep)
-return(res)
+  res <- data.frame(step = step, Isc = isc, Rsh = R_sh, Voc = voc, Rs = R_s, Pmp = pmp, Imp = Imp, Vmp = Vmp, FF = ff, Cutoff = xsep)
+  return(res)
 
 }

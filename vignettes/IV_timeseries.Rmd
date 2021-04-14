@@ -1,0 +1,23 @@
+---
+title: "IV_timeseries"
+author: "Jiqi Liu, Roger H. French, Megan M. Morbitzer"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{"Time Series Example I-V Curve FH Data"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+Data Description
+-----------------------------------
+The dataset is a small piece of a long term time-series I-V curves dataset of a full size module traced by ESL-Solar 500. It is over a 5 hour time period from 2013-12-29 09:00:00 to 2013-12-29 13:55:00 with 5 minute time intervals. The two columns are "tmst", which saves the date and time for the measurement in the format of "Year-Month-Date hour:minute:second" and "ivdf", which contains the I-V curve data points in a string format separated by "#" and voltage and current value separated by "*".
+
+Load data and run code 
+------------------------------------------
+```{r, message=FALSE, eval=TRUE}
+library(ddiv)
+data("IV_timeseries")
+```
+Example output
+--------------------------
+The result is extarcted features for example time-series data "IV_timeseries" if using code example in IVfeature or IVExtractResult function.

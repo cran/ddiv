@@ -4,11 +4,13 @@
 \name{IV_step2}
 \alias{IV_step2}
 \title{A data frame of IV curve with 2 step.}
-\format{A data frame with 41 rows and 2 variables:
+\format{
+A data frame with 41 rows and 2 variables:
 \describe{
   \item{V}{increasing vector}
   \item{I}{decreasing vector}
-}}
+}
+}
 \source{
 Solar Durability and Lifetime Extension (SDLE) Research Center, Case Western
 Reserve University

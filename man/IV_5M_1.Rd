@@ -4,11 +4,13 @@
 \name{IV_5M_1}
 \alias{IV_5M_1}
 \title{I-V Curves from External Solar Testing Laboratory.}
-\format{A data frame with 478 rows and 2 variables:
+\format{
+A data frame with 478 rows and 2 variables:
 \describe{
   \item{V}{increasing vector}
   \item{I}{decreasing vector}
-}}
+}
+}
 \source{
 Solar Durability and Lifetime Extension (SDLE) Research Center, Case Western
 Reserve University

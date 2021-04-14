@@ -46,9 +46,9 @@ IV2 <- data.frame(IV_step2)
 #?IV_step2
 
 ## Calculate number of steps in IV curve
-IVsteps(IV2$I,IV2$V,plot.option=F)
+IVsteps(IV2$I,IV2$V,plot.option=FALSE)
 
 ## Extract two sets of IV features for each sub IV curves
-IVExtractResult(IV2,plot.option=F)
+IVExtractResult(IV2,plot.option=FALSE)
 
 ```

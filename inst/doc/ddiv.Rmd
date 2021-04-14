@@ -1,5 +1,5 @@
 ---
-title: "ddiv v.0.1.0"
+title: "ddiv v.0.1.1"
 author: "Xuan Ma, Wei-Heng Huang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,10 +9,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-What is ddiv v0.1.0 and what does it do?
+This information is based off the following paper. 
+X. Ma, W. Huang, E. Schnabel, M. Köhl, J. Brynjarsdóttir, J. L. Braid, and R. H. French. “Data-Driven I–V Feature Extraction for Photovoltaic Modules.” IEEE Journal of Photovoltaics 9, no. 5 (September 2019): 1405–12. https://doi.org/10.1109/JPHOTOV.2019.2928477. 
 ---------------------------
 
-The R package "ddiv v0.1.0" use data driven method to extract $I-V$ features for given $I-V$ curves. This method aims to apply the basic definitions of the eight parameters (which is introduced in the vignette file "IVcurve") automatically calculate their values for large numbers of $I-V$ curves. For a given $I-V$ curve, the this package first identify steps in $I-V$ curves (definition of steps is introduced in the vigette file "IVcurve"), then extract $I-V$ features for each steps of $I-V$ curves.
+What is ddiv v0.1.1 and what does it do?
+---------------------------
+
+The R package "ddiv v0.1.1" use data driven method to extract $I-V$ features for given $I-V$ curves. This method aims to apply the basic definitions of the eight parameters (which is introduced in the vignette file "IVcurve") automatically calculate their values for large numbers of $I-V$ curves. For a given $I-V$ curve, the this package first identify steps in $I-V$ curves (definition of steps is introduced in the vigette file "IVcurve"), then extract $I-V$ features for each steps of $I-V$ curves.
 
 Segmented regression is used to find change points in $I-V$ curves. Here we apply "Segmented Regression" package and pull out the slopes for each range of data partitioned by this package. As segmented regression only help to identify change points in a curve, but not all change points indicates steps in $I-V$ curves. Thus we add several more criterion for the slopes we pulled out to identify the change points indicating steps. After calculate the steps in $I-V$ curves, we partition the whole data points into subsets for different steps of $I-V$ curves. We treat each of these different steps of $I-V$ curve as a single $I-V$ curve to extract features introduced below.
 
@@ -54,7 +58,7 @@ data(IV_step1)
 IV1 <- data.frame(IV_step1)
 
 ## Run IVExtractResult
-IVExtractResult(IV1,plot.option=T)
+IVExtractResult(IV1,plot.option=TRUE)
 
 ## As this IV curve is known to have one step, IVfeature() can be used
 IVfeature(IV1$I,IV1$V,crt=0.2,num=75,crtvalb=0.3)
@@ -64,14 +68,14 @@ data(IV_step2)
 IV2 <- data.frame(IV_step2)
 
 ## Run IVExtractResult
-IVExtractResult(IV2,plot.option=T)
+IVExtractResult(IV2,plot.option=TRUE)
 
 ## Load the IV dataset with three steps
 data(IV_step3)
 IV3 <- data.frame(IV_step3)
 
 ## Run IVExtractResult
-IVExtractResult(IV3,plot.option=T)
+IVExtractResult(IV3,plot.option=TRUE)
 
 ```
 

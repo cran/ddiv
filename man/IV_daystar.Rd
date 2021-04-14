@@ -4,11 +4,13 @@
 \name{IV_daystar}
 \alias{IV_daystar}
 \title{Outdoor Time Series I-V Curve Data from SDLE SunFarm.}
-\format{A data frame with 48 rows and 2 variables:
+\format{
+A data frame with 48 rows and 2 variables:
 \describe{
   \item{V}{increasing vector}
   \item{I}{decreasing vector}
-}}
+}
+}
 \source{
 Solar Durability and Lifetime Extension (SDLE) Research Center, Case Western
 Reserve University

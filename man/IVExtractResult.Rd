@@ -4,8 +4,15 @@
 \alias{IVExtractResult}
 \title{IV feature extraction}
 \usage{
-IVExtractResult(dat, k = 7, crt = 0.2, num = 75, crtvalb = 0.3,
-  plot.option = F)
+IVExtractResult(
+  dat,
+  k = 7,
+  crt = 0.2,
+  num = 75,
+  crtvalb = 0.3,
+  diff_slp = 0.01,
+  plot.option = F
+)
 }
 \arguments{
 \item{dat}{A dataframe of IV curve. The variable names should be "V" for voltage, and "I" for current. And rank with increasing voltage.}
@@ -17,6 +24,8 @@ IVExtractResult(dat, k = 7, crt = 0.2, num = 75, crtvalb = 0.3,
 \item{num}{A value of number of data points. The default is 75.}
 
 \item{crtvalb}{A value to set the change of I(current) we want to use as changing very much (to detect the end of IV curve). Suggestion is to test this function with several IV curves for your data and find the proper value. The default is 0.3}
+
+\item{diff_slp}{The difference between the slope on the left and on the right of the change point. The default is 0.01.}
 
 \item{plot.option}{True/False, it plots the IV curve. The default is false.}
 }
@@ -43,15 +52,40 @@ This function carries out IV feature extraction, by calculating steps then extra
 #load the data provided in the package
 data(IV_step1)
 IV1 <- data.frame(IV_step1)
-result <- IVExtractResult(IV1,plot.option=FALSE)
+result <- IVExtractResult(IV1, plot.option = FALSE)
 #use the IV curve with step=2
 data(IV_step2)
 IV2 <- data.frame(IV_step2)
 #with plot.option=TRUE, IV curve and steps are ploted
-result2 <- IVExtractResult(IV2,plot.option=FALSE)
+result2 <- IVExtractResult(IV2, plot.option = FALSE)
 #use the IV curve with step=3
 data(IV_step3)
 IV3 <- data.frame(IV_step3)
-IVExtractResult(IV3,plot.option=FALSE)
-
+IVExtractResult(IV3, plot.option = FALSE)
+\donttest{
+data("IV_timeseries")
+df <- IV_timeseries
+result <- data.frame()
+for (i in 1:length(df$tmst)){
+  IV = df$ivdf[i]
+  IV <- as.character(IV)
+  IV = data.frame(IV = strsplit(IV, '#'))
+  names(IV) <- 'IV'
+  IV$IV <- as.character(IV$IV)
+  IV <- tidyr::separate(IV, "IV", into = c("V", "I"), sep = '\\\\*')
+  IV <- IV[-1,]
+  IV$V = as.numeric(as.character(IV$V))
+  IV$I = as.numeric(as.character(IV$I))
+  IV = IV[order(IV$V, decreasing = FALSE),]
+  IV_frame <- data.frame(IV)
+  trial = try(IVfeature(IV_frame$I, IV_frame$V), silent = TRUE)
+  if ('try-error' \%in\% class(trial)){
+    temp <- data.frame(NA, NA, NA, NA, NA, NA, NA, NA)
+    names(temp) <- c('Isc', 'Rsh', 'Voc', 'Rs', 'Pmp', 'Imp', 'Vmp', 'FF')
+  }else{
+    temp <- data.frame(trial)
+  }
+  result <- rbind(result, temp)
+}
+result <- cbind(df, result)}
 }

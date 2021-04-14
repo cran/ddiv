@@ -25,7 +25,7 @@ IVExtractResult(IV_daystar,k=4)
 
 Example output
 --------------------------
-The result for finding steps for example data "IV_daystar", no changepoint identifying step is found.
+The result is for finding steps for example data "IV_daystar", no changepoint identifying step is found.
 
 ![](IV_daystar.png)
 

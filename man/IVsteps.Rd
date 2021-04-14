@@ -4,7 +4,7 @@
 \alias{IVsteps}
 \title{Calculate steps of IV curve}
 \usage{
-IVsteps(I, V, k = 7, plot.option = FALSE)
+IVsteps(I, V, k = 7, diff_slp = 0.01, plot.option = FALSE)
 }
 \arguments{
 \item{I}{A vector of current values from IV data frame}
@@ -12,6 +12,8 @@ IVsteps(I, V, k = 7, plot.option = FALSE)
 \item{V}{A vector of voltage values from IV data frame}
 
 \item{k}{The number of equally-spaced values to supply as starting values for the breakpoints. The default is 7.}
+
+\item{diff_slp}{The difference between the slope on the left and on the right of the change point. The default is 0.01.}
 
 \item{plot.option}{True/False, it plots the IV curve. The default is false.}
 }

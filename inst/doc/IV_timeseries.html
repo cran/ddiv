@@ -10,11 +10,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="Jiqi Liu, Justin S. fada, Alan Curran, Jennifer L. Braid, Roger H. French" />
+<meta name="author" content="Jiqi Liu, Roger H. French, Megan M. Morbitzer" />
 
 <meta name="date" content="2021-04-14" />
 
-<title>Damp Heat Plus Dynamic Mechanical Load Indoor Accelerated Test I-V Curve</title>
+<title>IV_timeseries</title>
 
 <script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
 
@@ -138,39 +138,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<h1 class="title toc-ignore">Damp Heat Plus Dynamic Mechanical Load Indoor Accelerated Test I-V Curve</h1>
-<h4 class="author">Jiqi Liu, Justin S. fada, Alan Curran, Jennifer L. Braid, Roger H. French</h4>
+<h1 class="title toc-ignore">IV_timeseries</h1>
+<h4 class="author">Jiqi Liu, Roger H. French, Megan M. Morbitzer</h4>
 <h4 class="date">2021-04-14</h4>
 
 
 
 <div id="data-description" class="section level2">
 <h2>Data Description</h2>
-<p>The I-V curve data is used for MLEET (Module Level Exposure and Evaluation Test) project funded by DOE (Department of Energy). It was taken from some commercial brand full size PV (photovoltaic) module under dampheat + DML (Dynamic Mechanical Load) indoor accelerated test. Each I-V curve has about 3800 points.</p>
+<p>The dataset is a small piece of a long term time-series I-V curves dataset of a full size module traced by ESL-Solar 500. It is over a 5 hour time period from 2013-12-29 09:00:00 to 2013-12-29 13:55:00 with 5 minute time intervals. The two columns are “tmst”, which saves the date and time for the measurement in the format of “Year-Month-Date hour:minute:second” and “ivdf”, which contains the I-V curve data points in a string format separated by “#” and voltage and current value separated by &quot;*&quot;.</p>
 </div>
-<div id="load-data-and-run-code-to-extract-iv-features" class="section level2">
-<h2>Load data and run code to extract IV features</h2>
+<div id="load-data-and-run-code" class="section level2">
+<h2>Load data and run code</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ddiv)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;IV_4K&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">IVExtractResult</span>(IV_4K)</span></code></pre></div>
-<pre><code>## Warning: max number of iterations (20) attained
-
-## Warning: max number of iterations (20) attained</code></pre>
-<pre><code>##      step   Isc     Rsh    Voc    Rs     Pmp   Imp    Vmp    FF Cutoff
-## y407    1 9.409 178.727 39.705 0.487 290.337 9.003 32.251 77.72     NA</code></pre>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;IV_timeseries&quot;</span>)</span></code></pre></div>
 </div>
 <div id="example-output" class="section level2">
 <h2>Example output</h2>
-<p>The result for finding steps for example data “IV_4K”, no changepoint identifying step is found.</p>
-<p><img src="data:image/png;base64,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" /></p>
-</div>
-<div id="reference" class="section level2">
-<h2>Reference</h2>
-<p>JiQi Liu, Alan Curran, Justin S. Fada, Xuan Ma, Wei-Heng Huang, C. Birk Jones, Erdmut Schnabel, Michael K¨ohl, Jennifer L. Braid, Roger H. French, 2018. Cross-correlation Analysis of the Indoor Accelerated and Real World Exposed Photovoltaic Systems Across Multiple Climate Zones, WCPEC-7, Hawaii.</p>
-</div>
-<div id="acknowledgement" class="section level2">
-<h2>Acknowledgement</h2>
-<p>This work was supported by the DOE-EERE SETO award DE-EE-0007140</p>
+<p>The result is extarcted features for example time-series data “IV_timeseries” if using code example in IVfeature or IVExtractResult function.</p>
 </div>
 
 

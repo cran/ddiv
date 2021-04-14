@@ -13,7 +13,7 @@ IVfeature(I, V, crt = 0.2, num = 75, crtvalb = 0.3)
 
 \item{crt}{A value to set for how large of regression coefficient change rate we use as not changing much. This is due to the value of IV curve, suggestion is to test this function with several IV curves for your data and find the proper value. The default is 0.2.}
 
-\item{num}{A value of number of data points. The default is 75.}
+\item{num}{A value of number of consecutive data points in the moving window used to calculate the slope of the windows and flat areas for extracting Isc and Rsh. The default is 75.}
 
 \item{crtvalb}{A value to set the change of I(current) we want to use as changing very much (to detect the end of IV curve). Suggestion is to test this function with several IV curves for your data and find the proper value. The default is 0.3}
 }
@@ -48,5 +48,30 @@ For IV curve has only one step, this function can be used.
 data(IV_step1)
 IV1 <- data.frame(IV_step1)
 result <- IVfeature(IV1$I,IV1$V,crt=0.2,num=75,crtvalb=0.3)
-
+\donttest{
+data("IV_timeseries")
+df <- IV_timeseries
+result <- data.frame()
+for (i in 1:length(df$tmst)){
+  IV = df$ivdf[i]
+  IV <- as.character(IV)
+  IV = data.frame(IV = strsplit(IV,'#'))
+  names(IV) <- 'IV'
+  IV$IV <- as.character(IV$IV)
+  IV <- tidyr::separate(IV,"IV",into = c("V","I"),sep = '\\\\*')
+  IV <- IV[-1,]
+  IV$V = as.numeric(as.character(IV$V))
+  IV$I=as.numeric(as.character(IV$I))
+  IV=IV[order(IV$V,decreasing=FALSE),]
+  IV_frame <- data.frame(IV)
+  trial=try(IVfeature(IV_frame$I,IV_frame$V),silent=TRUE)
+  if ('try-error' \%in\% class(trial)){
+    temp <-  data.frame(NA,NA,NA,NA,NA,NA,NA,NA)
+    names(temp) <- c('Isc','Rsh','Voc','Rs','Pmp','Imp','Vmp','FF')
+  }else{
+    temp <- data.frame(trial)
+  }
+  result <- rbind(result,temp)
+ }
+ result <- cbind(df,result)}
 }

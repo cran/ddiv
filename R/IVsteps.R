@@ -7,6 +7,7 @@
 ##' @param V A vector of voltage values from IV data frame
 ##' @param plot.option True/False, it plots the IV curve. The default is false.
 ##' @param k The number of equally-spaced values to supply as starting values for the breakpoints. The default is 7.
+##' @param diff_slp The difference between the slope on the left and on the right of the change point. The default is 0.01.
 ##'
 ##' @importFrom graphics plot
 ##' @importFrom graphics abline
@@ -35,7 +36,7 @@
 
 
 
-IVsteps <- function(I,V,k=7,plot.option=FALSE){
+IVsteps <- function(I, V, k = 7, diff_slp = 0.01, plot.option = FALSE){
 
 
   # make the spline of x (V) and y (I) (100 points)
@@ -49,15 +50,15 @@ IVsteps <- function(I,V,k=7,plot.option=FALSE){
 
 
   # Use the segment regression function to find the breakpoints (as many as the function can find)
-  trial <- try(segmented.lm(lm(y~x),seg.Z = ~x, psi = list(x = NA),
-                     control = seg.control(K=k,stop.if.error = FALSE, n.boot = 0, it.max = 20)))
+  trial <- try(segmented.lm(lm(y~x), seg.Z = ~x, psi = list(x = NA),
+                     control = seg.control(K = k, fix.npsi = FALSE, n.boot = 0, it.max = 20)))
 
   if( "segmented" %in% class(trial)){
-    f1 <- segmented.lm(lm(y~x),seg.Z = ~x, psi = list(x = NA),
-                     control = seg.control(K=k,stop.if.error = FALSE, n.boot = 0, it.max = 20))
+    f1 <- segmented.lm(lm(y~x), seg.Z = ~x, psi = list(x = NA),
+                     control = seg.control(K = k, fix.npsi = FALSE, n.boot = 0, it.max = 20))
     if(plot.option){
       # plot the curve along with the breakpoints the function found
-      plot(x,y, type = "l", xlab = "Voltage (V)", ylab = "Current (I)", main = "Final Change Points")
+      plot(x, y, type = "l", xlab = "Voltage (V)", ylab = "Current (I)", main = "Final Change Points")
       points.segmented(f1)
     }
     # Find the slope for each cut range
@@ -69,10 +70,10 @@ IVsteps <- function(I,V,k=7,plot.option=FALSE){
     step <- 1
     m <- 1
     xsep <- data.frame()
-    for (i in 1:(nrow(b$x)-1)) {
-      if((abs(b$x[i,1]) > abs(b$x[i + 1,1])) & (b$x[i,1] < 0) & (abs(b$x[i,1])-abs(b$x[i+1,1]))>0.002) {
+    for (i in 1:(nrow(b$x) - 1)) {
+      if((abs(b$x[i,1]) > abs(b$x[i + 1,1])) & (b$x[i,1] < 0) & (abs(b$x[i,1]) - abs(b$x[i + 1,1])) > diff_slp) {
         step <- step + 1
-        xsep[m,1] <- round(f1$psi[i,2],3)
+        xsep[m,1] <- round(f1$psi[i,2], 3)
         m <- m + 1
       }
     }
@@ -88,9 +89,9 @@ IVsteps <- function(I,V,k=7,plot.option=FALSE){
     if(length(V) > 100){
       # Plot the curve and the cutoff points to see if reasonable
       if (xsep %in% NA){
-        plot(V,I,xlab = 'voltage',ylab = 'current',main = 'I-V curve')
+        plot(V, I, xlab = 'voltage', ylab = 'current', main = 'I-V curve')
       }else{
-        plot(V,I,xlab = 'voltage',ylab = 'current',main = 'I-V curve')
+        plot(V, I, xlab = 'voltage', ylab = 'current', main = 'I-V curve')
         for (i in 1:nrow(xsep)) {
           abline(v = xsep[i,1], col = 'red')
         }
@@ -98,9 +99,9 @@ IVsteps <- function(I,V,k=7,plot.option=FALSE){
     }else{
       # Plot the curve and the cutoff points to see if reasonable
       if (xsep %in% NA){
-      plot(x,y,xlab = 'voltage',ylab = 'current',main = 'I-V curve')
+      plot(x, y, xlab = 'voltage', ylab = 'current', main = 'I-V curve')
     }else{
-        plot(x,y,xlab = 'voltage',ylab = 'current',main = 'I-V curve')
+        plot(x, y, xlab = 'voltage', ylab = 'current', main = 'I-V curve')
         for (i in 1:nrow(xsep)) {
         abline(v = xsep[i,1], col = 'red')
       }
@@ -109,7 +110,7 @@ IVsteps <- function(I,V,k=7,plot.option=FALSE){
 
   }
 
-  return(list(step=step,xsep=xsep))
+  return(list(step = step, xsep = xsep))
 }
 
 

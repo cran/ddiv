@@ -4,11 +4,13 @@
 \name{IV_4K}
 \alias{IV_4K}
 \title{Damp Heat Plus Dynamic Mechanical Load Indoor Accelerated Test I-V Curve.}
-\format{A data frame with 3637 rows and 2 variables:
+\format{
+A data frame with 3637 rows and 2 variables:
 \describe{
   \item{V}{increasing vector}
   \item{I}{decreasing vector}
-}}
+}
+}
 \source{
 Solar Durability and Lifetime Extension (SDLE) Research Center, Case Western
 Reserve University
